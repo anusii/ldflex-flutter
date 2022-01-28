@@ -43,8 +43,6 @@ print(label)
 
 Most of the functionality available at https://github.com/ldflex/ldflex should be available here, noting the following key things:
 
-For function calls, one needs to use the patterns:
-
 To return iterables rather than single results one needs to use `.resolveIterator`
 
 ```dart
