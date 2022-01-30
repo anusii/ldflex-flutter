@@ -20,7 +20,7 @@ This package exports two key classes `LDflexWidget` and `LDflexEntity`. For most
 // Set up link to document and context
 // This is usually an application-wide configuration
 var rubenProfile = LDflexWidgetFactory([
-    "http://xmlns.com/foaf/spec/index.rdf"
+    'https://ruben.verborgh.org/profile/'
   ], {
     "context": {
       "@context": {
