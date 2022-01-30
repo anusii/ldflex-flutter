@@ -16,6 +16,8 @@ This package exports two key classes `LDflexWidget` and `LDflexEntity`. For most
 
 ## Using `LDflexWidget`
 
+`LDflexWidget`s are like an ldflex entity object, but also contain a `build` method which resolves the path and creates a `FutureBuild` widget. This allows us to do the following
+
 ```dart
 // Set up link to document and context
 // This is usually an application-wide configuration
@@ -32,7 +34,7 @@ var rubenProfile = LDflexWidgetFactory([
     }
   });
 
-// Create entity we are interested in withinin the document
+// Create entity we are interested in within the document
 LDflexWidget ruben = rubenProfile('https://ruben.verborgh.org/profile/#me')
 
 class _MyHomePageState extends State<MyHomePage> {
