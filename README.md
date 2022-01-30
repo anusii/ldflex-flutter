@@ -12,6 +12,50 @@ Usage for now is as follows.
 
 2) Add ldflex.dart as a file in your project
 
+This package exports two key classes `LDflexWidget` and `LDflexEntity`. For most development applications you will want to use the `LDflexWidget` class. 
+
+## Using `LDflexWidget`
+
+```dart
+// Set up link to document and context
+// This is usually an application-wide configuration
+var rubenProfile = LDflexWidgetFactory([
+    "http://xmlns.com/foaf/spec/index.rdf"
+  ], {
+    "context": {
+      "@context": {
+        "@vocab": "http://xmlns.com/foaf/0.1/",
+        "friends": "knows",
+        "label": "http://www.w3.org/2000/01/rdf-schema#label",
+        "rbn": "https://ruben.verborgh.org/profile/#",
+      },
+    }
+  });
+
+// Create entity we are interested in withinin the document
+LDflexWidget ruben = rubenProfile('https://ruben.verborgh.org/profile/#me')
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ruben['label'],
+            const Text(' is interested in '),
+            ruben['interest']['label']
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+## Using `LdflexEntity`
+
 You can now use the `LdflexEntity` class as follows
 
 ```dart
