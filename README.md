@@ -7,7 +7,7 @@ Usage for now is as follows.
 
 1) Include `bundle.js` as a script in your index file 
 ```html
-<script src="bundle-3.js"></script>
+<script src="bundle.js"></script>
 ```
 
 2) Add ldflex.dart as a file in your project
@@ -93,10 +93,10 @@ To return iterables rather than single results one needs to use `.resolveIterato
 var labels = await person['interest']['label'].resolveIterator()
 ```
 
-To call functions one needs to use `.call`
+To call functions one needs to use `.call`, the first argument is the function name, the second argument is a list of args for the function you want to call
 
 ```dart
-var uris = await person['interest'].call('sort', 'label').resolveIterator()
+var uris = await person['interest'].call('sort', ['label']).resolveIterator()
 ```
 
 You *cannot* use dot `.` properties, everything must be accessed via the `[]` operator. i.e. one must use `person['interest']['label']` rather than `person.interest.label`
