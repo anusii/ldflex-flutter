@@ -102,3 +102,11 @@ var uris = await person['interest'].call('sort', ['label']).resolveIterator()
 ```
 
 You *cannot* use dot `.` properties, everything must be accessed via the `[]` operator. i.e. one must use `person['interest']['label']` rather than `person.interest.label`
+
+## Running the test app
+
+To run the test application run `flutter run` - the result should look like:
+
+![https://github.com/anusii/comunica-flutter/blob/main//test_app.png](https://github.com/anusii/comunica-flutter/blob/main//test_app.png)
+
+If you have CORS errors follow the instructions [here](https://www.google.com/search?channel=fs&client=ubuntu&q=chrome+disable+cors).
