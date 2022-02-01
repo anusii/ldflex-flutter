@@ -107,6 +107,6 @@ You *cannot* use dot `.` properties, everything must be accessed via the `[]` op
 
 To run the test application run `flutter run` - the result should look like:
 
-![https://raw.githubusercontent.com/anusii/ldflex-flutter/main/test-app.png](https://raw.githubusercontent.com/anusii/ldflex-flutter/main/test-app.png)
+![./test-app.png](./test-app.png)
 
 If you have CORS errors follow the instructions [here](https://www.google.com/search?channel=fs&client=ubuntu&q=chrome+disable+cors).
