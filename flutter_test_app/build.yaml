@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      js_wrapping_generator:
+        generate_for:
+          include:
+          - 'lib/google_map.dart'
