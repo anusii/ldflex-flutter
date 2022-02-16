@@ -19,7 +19,7 @@ JsObject createPath(String path, List<String> sources, Object options) {
 
 class LDflexEntity {
   // JavaScriptObject
-  late dynamic _path;
+  dynamic _path;
   LDflexEntity(String path, List<String> sources, Object options) {
     _path = createPath(path, sources, options);
   }
@@ -29,10 +29,10 @@ class LDflexEntity {
   LDflexEntity operator [](String index) {
     return LDflexEntity.fromPath(getProperty(_path, index));
   }
-  LDflexEntity call(String method, List<Object?> args) {
+  LDflexEntity call(String method, List<Object> args) {
     return LDflexEntity.fromPath(callMethod(_path, method, args));
   }
-  Future<LDflexEntity?> resolve() async {
+  Future<LDflexEntity> resolve() async {
       Iterable<LDflexEntity> entities = await awaitIterator();
       return entities.isEmpty ? null : entities.elementAt(0);
   }
@@ -47,12 +47,40 @@ class LDflexEntity {
   //   return (await resolve()).toString();
   // }
   // TODO: Move this to a flutter specific extended class
-  FutureBuilder<LDflexEntity?> toTextWidget() {
-    return FutureBuilder<LDflexEntity?>(
+  FutureBuilder<LDflexEntity> toTextWidget({
+  Key key,
+  TextStyle style,
+  StrutStyle strutStyle,
+  TextAlign textAlign,
+  TextDirection textDirection,
+  Locale locale,
+  bool softWrap,
+  TextOverflow overflow,
+  double textScaleFactor,
+  int maxLines,
+  String semanticsLabel,
+  TextWidthBasis textWidthBasis,
+  TextHeightBehavior textHeightBehavior,
+}) {
+    return FutureBuilder<LDflexEntity>(
       future: resolve(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data?.toString() ?? '');
+          return Text(snapshot.data?.toString() ?? '',
+  key: key,
+  style: style,
+  strutStyle: strutStyle,
+  textAlign: textAlign,
+  textDirection: textDirection,
+  locale: locale,
+  softWrap: softWrap,
+  overflow: overflow,
+  textScaleFactor: textScaleFactor,
+  maxLines: maxLines,
+  semanticsLabel: semanticsLabel,
+  textWidthBasis: textWidthBasis,
+  textHeightBehavior: textHeightBehavior,
+);
         }
         return Container();
       },
@@ -61,22 +89,53 @@ class LDflexEntity {
 }
 
 class LDflexWidget extends StatelessWidget {
-  late LDflexEntity _entity;
-  LDflexWidget(String path, List<String> sources, Object options, {Key? key}) : super(key: key) {
+  LDflexEntity _entity;
+  LDflexWidget(String path, List<String> sources, Object options, {Key key}) : super(key: key) {
     _entity = LDflexEntity(path, sources, options);
   }
   // LDflexEntity entity;
   // LDflexWidget(String path, List<String> sources, Object options, {Key? key}) : super(key: key) {
   //   entity = LDflexEntity(path, sources, options);
   // }
-  LDflexWidget.fromEntity(LDflexEntity entity, {Key? key}) : super(key: key) {
+  LDflexWidget.fromEntity(LDflexEntity entity, {Key key}) : super(key: key) {
     _entity = entity;
   }
   LDflexWidget operator [](String index) {
     return LDflexWidget.fromEntity(_entity[index]);
   }
-  LDflexWidget call(String method, List<Object?> args) {
-    return LDflexWidget.fromEntity(_entity.call(method, args));
+  // LDflexWidget call(String method, List<Object> args) {
+  //   return LDflexWidget.fromEntity(_entity.call(method, args));
+  // }
+  Widget call({
+  Key key,
+  TextStyle style,
+  StrutStyle strutStyle,
+  TextAlign textAlign,
+  TextDirection textDirection,
+  Locale locale,
+  bool softWrap,
+  TextOverflow overflow,
+  double textScaleFactor,
+  int maxLines,
+  String semanticsLabel,
+  TextWidthBasis textWidthBasis,
+  TextHeightBehavior textHeightBehavior,
+}) {
+    return _entity.toTextWidget(
+        key: key,
+  style: style,
+  strutStyle: strutStyle,
+  textAlign: textAlign,
+  textDirection: textDirection,
+  locale: locale,
+  softWrap: softWrap,
+  overflow: overflow,
+  textScaleFactor: textScaleFactor,
+  maxLines: maxLines,
+  semanticsLabel: semanticsLabel,
+  textWidthBasis: textWidthBasis,
+  textHeightBehavior: textHeightBehavior,
+    );
   }
   @override
   Widget build(BuildContext context) {
