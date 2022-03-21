@@ -32,6 +32,21 @@ class LDflexEntity {
   LDflexEntity call(String method, List<Object> args) {
     return LDflexEntity.fromPath(callMethod(_path, method, args));
   }
+  // We need to add this
+  // asyncIterator: new _AsyncIteratorHandler__WEBPACK_IMPORTED_MODULE_1__["default"](),
+  Stream<LDflexEntity> stream() async* {
+    // dynamic iterator = await promiseToFuture(getProperty(_path, 'asyncIterator'));
+    // dynamic iterator = await promiseToFuture(callMethod(_path, 'asyncIterator', []));
+    dynamic iterator = callMethod(_path, 'asyncIterator', []);
+    while (true) {
+      final next = await promiseToFuture(callMethod(iterator, 'next', []));
+      if (getProperty(next, 'done')) {
+        break;
+      }
+      yield LDflexEntity.fromPath(getProperty(next, 'value'));
+    }
+  }
+
   Future<LDflexEntity> resolve() async {
       Iterable<LDflexEntity> entities = await awaitIterator();
       return entities.isEmpty ? null : entities.elementAt(0);
