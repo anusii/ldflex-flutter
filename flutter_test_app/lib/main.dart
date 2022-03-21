@@ -75,11 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     test2() async {
-      Stream<LDflexEntity> entities = rubenEntity['interest'].stream();
-      entities.listen((event) async {
-        print("test stream ${await event['label'].toString()}");
+      Stream<LDflexEntity> entities = rubenEntity['interest']['label'].stream();
+      entities.listen((event) {
+        print("test stream ${event.toString()}");
       });
-      
       // List<LDflexEntity> listed = await entities.toList();
       // for (final l in listed) {
       //   print("test streamed iterable ${l.toString()}");
