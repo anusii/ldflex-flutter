@@ -67,6 +67,8 @@ LDflexEntity rubenEntity = LDflexEntity(
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    
+    // This just awaits all entities matching this pattern - no streaming
     test() async {
       Iterable<LDflexEntity> entities = await rubenEntity['interest']['label'].awaitIterator();
       for (final e in entities) {
@@ -74,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
+    // This streams the labels of all interests
     test2() async {
       Stream<LDflexEntity> entities = rubenEntity['interest']['label'].stream();
       entities.listen((event) {
@@ -85,10 +88,20 @@ class _MyHomePageState extends State<MyHomePage> {
       // }
     }
 
+    // This streams the uris of the interests and then we retrieve the labels of each
+    // interest separately
+    test3() async {
+      Stream<LDflexEntity> entities = rubenEntity['interest'].stream();
+      entities.listen((event) async {
+        print("test stream version 2 ${(await event['label'].resolve()).toString()}");
+      });
+    }
+
     // print(rubenEntity['interest']['label'].awaitIterator());
 
     test();
     test2();
+    test3();
 
     return Scaffold(
       body: Center(
