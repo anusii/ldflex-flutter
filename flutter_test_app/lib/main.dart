@@ -51,9 +51,46 @@ var rubenProfile = LDflexWidgetFactory([
 // Create entity we are interested in within the document
 LDflexWidget ruben = rubenProfile('https://ruben.verborgh.org/profile/#me');
 
+LDflexEntity rubenEntity = LDflexEntity(
+  'https://ruben.verborgh.org/profile/#me',
+  ['https://ruben.verborgh.org/profile/'], {
+    "context": {
+      "@context": {
+        "@vocab": "http://xmlns.com/foaf/0.1/",
+        "friends": "knows",
+        "label": "http://www.w3.org/2000/01/rdf-schema#label",
+        "rbn": "https://ruben.verborgh.org/profile/#",
+      },
+    }
+  });
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    test() async {
+      Iterable<LDflexEntity> entities = await rubenEntity['interest']['label'].awaitIterator();
+      for (final e in entities) {
+        print("test standard iterable ${e.toString()}");
+      }
+    }
+
+    test2() async {
+      Stream<LDflexEntity> entities = rubenEntity['interest'].stream();
+      entities.listen((event) async {
+        print("test stream ${await event['label'].toString()}");
+      });
+      
+      // List<LDflexEntity> listed = await entities.toList();
+      // for (final l in listed) {
+      //   print("test streamed iterable ${l.toString()}");
+      // }
+    }
+
+    // print(rubenEntity['interest']['label'].awaitIterator());
+
+    test();
+    test2();
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -61,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ruben['label'],
             const Text(' is interested in '),
-            ruben['interest']['label']
+            ruben['interest']['label'],
           ],
         ),
       ),
